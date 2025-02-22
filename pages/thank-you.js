@@ -30,10 +30,10 @@ export default function ThankYouPage() {
       {!submitted ? (
         <>
           <textarea
-            placeholder="Offer Feedback (optional)"
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            className="w-full max-w-md p-2 border rounded mt-4"
+            placeholder="Offer Feedback (optional)"
+            className="w-full max-w-lg mx-auto p-2 border border-gray-300 rounded bg-white text-black placeholder-gray-400"
           />
           <button onClick={handleSubmit} className="mt-4 bg-blue-500 text-white p-2 rounded">
             Submit Feedback

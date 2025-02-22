@@ -1,0 +1,20 @@
+// STEPS TO COMMIT ON GIT HUB
+// first open new terminal window with moon-rhythms folder
+
+// stage files
+
+git add .
+
+
+// give it a name
+
+git commit -m "Updated form validation"
+
+
+// send commit
+
+git push origin main
+
+
+// run app
+npm run dev
