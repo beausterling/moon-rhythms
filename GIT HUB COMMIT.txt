@@ -8,7 +8,7 @@ git add .
 
 // give it a name
 
-git commit -m "Updated form validation"
+git commit -m "Day 2"
 
 
 // send commit

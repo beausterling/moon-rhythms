@@ -73,63 +73,69 @@ export default function AstrologyForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
-
     const formattedBirthtime = `${formData.birthtime}:00`;
 
-    const submissionData = {
-      ...formData,
-      birthtime: formattedBirthtime,
-    };
+    try {
+        const response = await fetch("/api/prokerala", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                birthdate: formData.birthdate,
+                birthtime: formattedBirthtime,
+                lat: formData.lat,
+                lng: formData.lng,
+            }),
+        });
+        const data = await response.json();
 
-    const { data, error } = await supabase.from("users").insert([submissionData]);
-
-    if (error) {
-      console.error("Error saving data:", error);
-      setErrors({ form: "An error occurred while submitting. Please try again." });
-    } else {
-      window.location.href = "/thank-you"; // Redirect to thank-you page
+        if (response.ok) {
+            console.log("Prokerala Response:", data);
+            alert("Astrology data fetched successfully!");
+        } else {
+            console.error("Error:", data.error);
+            alert("Failed to fetch astrology data.");
+        }
+    } catch (error) {
+        console.error("Request failed:", error);
     }
-  };
+};
 
   return (
     <LoadScript googleMapsApiKey={GOOGLE_MAPS_API_KEY} libraries={["places"]}>
-      <form onSubmit={handleSubmit} className="p-4 max-w-lg mx-auto">
+    <form onSubmit={handleSubmit} className="p-4 max-w-lg mx-auto">
+      <input
+        type="text"
+        placeholder="Name"
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+        required
+        className="w-full p-2 border rounded mb-2 bg-white text-black placeholder-gray-500"
+      />
+      <input
+        type="date"
+        value={formData.birthdate}
+        onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
+        required
+        className="w-full p-2 border rounded mb-2 bg-white text-black"
+      />
+      <input
+        type="time"
+        value={formData.birthtime}
+        onChange={(e) => setFormData({ ...formData, birthtime: e.target.value })}
+        required
+        className="w-full p-2 border rounded mb-2 bg-white text-black"
+      />
+      <StandaloneSearchBox onLoad={setSearchBox} onPlacesChanged={onPlacesChanged}>
         <input
           type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          required
+          placeholder="Birth Location"
           className="w-full p-2 border rounded mb-2 bg-white text-black placeholder-gray-500"
         />
-        <input
-          type="date"
-          value={formData.birthdate}
-          onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
-          required
-          className="w-full p-2 border rounded mb-2 bg-white text-black"
-        />
-        <input
-          type="time"
-          value={formData.birthtime}
-          onChange={(e) => setFormData({ ...formData, birthtime: e.target.value })}
-          required
-          className="w-full p-2 border rounded mb-2 bg-white text-black"
-        />
-        <StandaloneSearchBox onLoad={setSearchBox} onPlacesChanged={onPlacesChanged}>
-          <input
-            type="text"
-            placeholder="Birth Location"
-            className="w-full p-2 border rounded mb-2 bg-white text-black placeholder-gray-500"
-          />
-        </StandaloneSearchBox>
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
-          Submit
-        </button>
-      </form>
+      </StandaloneSearchBox>
+      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+        Submit
+      </button>
+    </form>
     </LoadScript>
   );
 }
