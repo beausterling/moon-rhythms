@@ -188,8 +188,8 @@ export default function AstrologyForm() {
         birthtime: formattedBirthtime
       });
 
-      // Fetch astrology data from chart calculation API
-      const chartResponse = await fetch("/api/ChartCalculation", {
+      // Fetch astrology data from Swiss Ephemeris API endpoint
+      const chartResponse = await fetch("/api/SwissEphemerisChart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -198,7 +198,8 @@ export default function AstrologyForm() {
           lat: formData.lat,
           lng: formData.lng,
           email: formData.email || null,
-          location: formData.location_name
+          location: formData.location_name,
+          utcOffset: formData.utc_offset
         }),
       });
 
@@ -245,7 +246,6 @@ export default function AstrologyForm() {
               birth_location: formData.location_name,
               birth_lat: formData.lat,
               birth_lng: formData.lng,
-              chart_data: chartData,
               updated_at: new Date().toISOString(),
             })
             .eq("id", existingUser.id);
@@ -253,19 +253,17 @@ export default function AstrologyForm() {
           supabaseError = error;
         } else {
           // Insert new record
-          const { error } = await supabase.from("users").insert([
-            {
-              name: formData.name,
-              email: formData.email || null,
-              birthdate: formData.birthdate,
-              birthtime: formattedBirthtime,
-              birth_location: formData.location_name,
-              birth_lat: formData.lat,
-              birth_lng: formData.lng,
-              chart_data: chartData,
-              created_at: new Date().toISOString(),
-            },
-          ]);
+          const { error } = await supabase.from("users").insert({
+            email: formData.email,
+            name: formData.name,
+            birthdate: formData.birthdate,
+            birthtime: formattedBirthtime,
+            birth_location: formData.location_name,
+            birth_lat: formData.lat,
+            birth_lng: formData.lng,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          });
           
           supabaseError = error;
         }
@@ -338,6 +336,12 @@ export default function AstrologyForm() {
   return (
     <Container maxW="lg" py={8}>
       <Heading as="h1" size="xl" mb={6} textAlign="center">Generate Your Birth Chart</Heading>
+      
+      <Box mb={4} p={3} borderRadius="md" bg="blue.50" textAlign="center">
+        <Text fontWeight="medium" color="blue.700">
+          Using Swiss Ephemeris for professional-grade astrological accuracy
+        </Text>
+      </Box>
       
       <GoogleMapsComponents
         onPlacesChanged={onPlacesChanged}
