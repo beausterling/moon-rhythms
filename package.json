@@ -22,7 +22,8 @@
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sweph": "^2.10.3-4"
+    "sweph": "^2.10.3-4",
+    "swisseph": "^0.5.17"
   },
   "devDependencies": {
     "postcss": "^8",
