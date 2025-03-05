@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2017 Moon Phases</title>
+    <style>
+        body {
+            background: black;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #moon {
+            max-width: 730px;
+            max-height: 730px;
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img id="moon" src="moon-phases/moon.0648.jpg" alt="Moon Phase">
+    <script>
+        const startHour = 648;  // First new moon of 2017
+        const endHour = 8433;   // Last new moon of 2017
+        let currentHour = startHour;
+        
+        function updateMoon() {
+            const paddedHour = currentHour.toString().padStart(4, '0');
+            document.getElementById('moon').src = `moon-phases/moon.${paddedHour}.jpg`;
+            
+            currentHour++;
+            if (currentHour > endHour) {
+                currentHour = startHour;  // Loop back to start
+            }
+        }
+        
+        // Update every 50ms (20 frames per second)
+        setInterval(updateMoon, 50);
+    </script>
+</body>
+</html> 

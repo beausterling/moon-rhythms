@@ -1,45 +1,43 @@
-import React from 'react';
-import { Box, Flex, Text, Stack, Button, IconButton, useDisclosure, useColorModeValue } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { Box, Flex, HStack, Link as ChakraLink, IconButton, useDisclosure, useColorModeValue, useColorMode, Stack, Text } from '@chakra-ui/react';
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/form', label: 'Birth Form' },
-  { href: '/chart', label: 'Chart Generator' },
-  { href: '/about', label: 'About' },
-];
-
-const NavLink = ({ href, children, isActive }) => {
-  const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const activeColor = useColorModeValue('purple.600', 'purple.300');
-  const hoverColor = useColorModeValue('purple.800', 'purple.200');
+const NavLink = ({ children, href }) => {
+  const router = useRouter();
+  const isActive = router.pathname === href;
   
   return (
-    <Link href={href} passHref>
-      <Box
+    <Link href={href} passHref legacyBehavior>
+      <ChakraLink
         px={2}
         py={1}
         rounded={'md'}
-        color={isActive ? activeColor : linkColor}
         fontWeight={isActive ? 'bold' : 'medium'}
+        color={isActive ? useColorModeValue('blue.500', 'blue.300') : useColorModeValue('gray.600', 'gray.200')}
         _hover={{
           textDecoration: 'none',
-          color: hoverColor,
+          bg: useColorModeValue('gray.200', 'gray.700'),
         }}
-        cursor="pointer"
       >
         {children}
-      </Box>
+      </ChakraLink>
     </Link>
   );
 };
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const router = useRouter();
+  const { colorMode, toggleColorMode } = useColorMode();
   
+  const Links = [
+    { name: 'Home', path: '/' },
+    { name: 'Moon Position', path: '/moon-position' },
+    { name: 'Natal Form', path: '/natal-form' },
+    { name: 'Profile', path: '/natal-chart-display' },
+    { name: 'About', path: '/about' }
+  ];
+
   return (
     <Box bg={useColorModeValue('white', 'gray.900')} px={4} boxShadow="sm">
       <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
@@ -50,44 +48,36 @@ export default function Navbar() {
           display={{ md: 'none' }}
           onClick={isOpen ? onClose : onOpen}
         />
-        <Box>
-          <Link href="/" passHref>
-            <Text
-              fontSize="xl"
-              fontWeight="bold"
-              bgGradient="linear(to-r, purple.400, purple.600)"
-              bgClip="text"
-              cursor="pointer"
-            >
+        <HStack spacing={8} alignItems={'center'}>
+          <Box>
+            <Text fontWeight="bold" fontSize="lg" color={useColorModeValue('blue.600', 'blue.300')}>
               Moon Rhythms
             </Text>
-          </Link>
-        </Box>
-        <Flex alignItems={'center'}>
-          <Stack direction={'row'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {links.map((link) => (
-              <NavLink 
-                key={link.href} 
-                href={link.href}
-                isActive={router.pathname === link.href}
-              >
-                {link.label}
+          </Box>
+          <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
+            {Links.map((link) => (
+              <NavLink key={link.name} href={link.path}>
+                {link.name}
               </NavLink>
             ))}
-          </Stack>
+          </HStack>
+        </HStack>
+        <Flex alignItems={'center'}>
+          <IconButton
+            aria-label="Toggle color mode"
+            icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+            onClick={toggleColorMode}
+            variant="ghost"
+          />
         </Flex>
       </Flex>
 
       {isOpen ? (
         <Box pb={4} display={{ md: 'none' }}>
           <Stack as={'nav'} spacing={4}>
-            {links.map((link) => (
-              <NavLink 
-                key={link.href} 
-                href={link.href}
-                isActive={router.pathname === link.href}
-              >
-                {link.label}
+            {Links.map((link) => (
+              <NavLink key={link.name} href={link.path}>
+                {link.name}
               </NavLink>
             ))}
           </Stack>

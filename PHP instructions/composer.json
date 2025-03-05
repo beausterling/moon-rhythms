@@ -1,0 +1,43 @@
+{
+  "name": "rogergerecke/swiss-ephemeris",
+  "description": "Astrotool",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Roger Gerecke",
+      "email": "roger.gerecke@rogergerecke.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "App\\Tests\\": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "github",
+      "name": "Bill-Gray/jpl_eph",
+      "url": "https://github.com/Bill-Gray/jpl_eph.git"
+    }
+  ],
+  "require-dev": {
+    "twitter/bootstrap": "v4.3.1",
+    "phpunit/phpunit": "8.1.5",
+    "bill-gray/jpl_eph": "dev-master"
+  },
+  "require": {
+    "php": ">=7.4",
+    "ext-json": "*"
+  },
+  "config": {
+  "platform": {
+    "php": "7.4"
+  }
+}
+}

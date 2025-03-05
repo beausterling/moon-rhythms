@@ -1,40 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# My Todo List App
+
+A simple, elegant, and responsive Todo List application built with React. This application allows users to add, delete, and mark tasks as completed, as well as filter tasks by their completion status.
+
+## Features
+
+- Add new tasks
+- Mark tasks as completed
+- Delete tasks
+- Filter tasks (All, Active, Completed)
+- Clear all completed tasks
+- Persistent storage using localStorage
+- Responsive design
+
+## Technologies Used
+
+- React
+- JavaScript (ES6+)
+- CSS3
+- HTML5
+- localStorage API
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js (v14.0.0 or later)
+- npm (v6.0.0 or later)
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/my-todo-list.git
+   ```
+
+2. Navigate to the project directory:
+   ```
+   cd my-todo-list
+   ```
+
+3. Install dependencies:
+   ```
+   npm install
+   ```
+
+4. Start the development server:
+   ```
+   npm start
+   ```
+
+5. Open your browser and visit:
+   ```
+   http://localhost:3000
+   ```
+
+## Usage
+
+- **Adding a Task**: Type your task in the input field and press Enter or click the "Add" button.
+- **Completing a Task**: Click on the checkbox or the task text to mark it as completed.
+- **Deleting a Task**: Click the "Delete" button next to a task to remove it.
+- **Filtering Tasks**: Use the filter buttons to view All, Active, or Completed tasks.
+- **Clearing Completed Tasks**: Click the "Clear completed" button to remove all completed tasks.
+
+## Build for Production
+
+To build the app for production, run:
+```
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will create a `build` directory with optimized production files.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## License
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Acknowledgments
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- Create React App for the initial project setup
+- React community for the excellent documentation and resources
